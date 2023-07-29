@@ -1,0 +1,27 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Email Request Handler",
+	"description": "Schema to define expected json payload for email routing",
+	"type": "object",
+	"properties": {
+		"to": {
+			"description": "Email Receiver",
+			"type": "string",
+			"format": "email"},
+		"to_name": {
+			"description": "Receiver Name",
+			"type": "string"},
+		"from": {
+			"description": "Sender Email",
+			"type": "string",
+			"format": "email"},
+		"from_name": {
+			"description": "Sender Name",
+			"type": "string"},
+		"subject": {
+			"description": "Email Subject",
+			"type": "string"},
+		"body": {
+			"description": "Email Description",
+			"type": "string"}},
+					"required": ["to", "to_name", "from", "from_name", "subject", "body"]}

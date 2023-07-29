@@ -2,9 +2,16 @@ import os
 
 from flask import Flask, request, jsonify, render_template
 from markupsafe import escape
-from werkzeug.datastructures import ImmutableMultiDict
+# from werkzeug.datastructures import ImmutableMultiDict
 from jsonschema import validate, exceptions, FormatChecker
 import json
+
+def act_on_file(path, func):
+    with open(path, 'r') as file:
+        return func(file)
+
+def load_json_from_file(path):
+    return act_on_file(path, json.load)
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -29,48 +36,12 @@ def create_app(test_config=None):
     def entry():
         return "<p>Entry point!</p>"
       
-      
-    example_json = {
-      "to": "fake@example.com",
-      "to_name": "Mr. Fake",
-      "from": "no-reply@fake.com",
-      "from_name":"Ms. Fake",
-      "subject": "A message from The Fake Family",
-      "body": "<h1>Your Bill</h1><p>$10</p>"
-    }
-    
-    schema = {
-      "$schema": "https://json-schema.org/draft/2020-12/schema",
-      "title": "Email Request Handler",
-      "description": "Schema to define expected json payload for email routing",
-      "type": "object",
-      "properties": {
-        "to": {
-          "description": "Email Receiver",
-          "type": "string",
-          "format": "email"},
-        "to_name": {
-          "description": "Receiver Name",
-          "type": "string"},
-        "from": {
-          "description": "Sender Email",
-          "type": "string",
-          "format": "email"},
-        "from_name": {
-          "description": "Sender Name",
-          "type": "string"},
-        "subject": {
-          "description": "Email Subject",
-          "type": "string"},
-        "body": {
-          "description": "Email Description",
-          "type": "string"}},
-              "required": ["to", "to_name", "from", "from_name", "subject", "body"]}
-
     @app.route("/email", methods=["POST"])
     def process_email_routing_request():
+      email_schema = load_json_from_file('./flaskr/schema/email.json')
+
       try:
-        validate(request.json, schema, format_checker=FormatChecker())
+        validate(request.json, email_schema, format_checker=FormatChecker())
         return request.json
       except exceptions.ValidationError as e:
         return jsonify(error=e.message)      
