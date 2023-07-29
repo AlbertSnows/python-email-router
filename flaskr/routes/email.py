@@ -5,15 +5,6 @@ from pyrsistent import freeze
 from flaskr.core.mailing import handle_email_routing
 import json 
 
-example = {
-	"to": "fake@example.com",
-	"to_name": "Mr. Fake",
-	"from": "no-reply@fake.com",
-	"from_name":"Ms. Fake",
-	"subject": "A message from The Fake Family",
-	"body": "<h1>Your Bill</h1><p>$10</p>"
-}
-
 bp = Blueprint("email", __name__, url_prefix="/email")
 
 def validate_input(json):

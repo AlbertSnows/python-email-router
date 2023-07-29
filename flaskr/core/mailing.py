@@ -2,33 +2,45 @@ import os
 from pyrsistent import thaw
 from flaskr.core.parsing import update_email_body_to_plaintext
 import sendgrid
-from sendgrid.helpers.mail import *
+# from sendgrid.helpers.mail import *
+import json
+import requests
+from flaskr.utility.exceptions import handle
 
-example = {
-	"to": "fake@example.com",
-	"to_name": "Mr. Fake",
-	"from": "no-reply@fake.com",
-	"from_name":"Ms. Fake",
-	"subject": "A message from The Fake Family",
-	"body": "<h1>Your Bill</h1><p>$10</p>"
-}
+def build_sendgrid_payload(email_info):
+  return   {
+    "personalizations":
+      [{"to":[{"email":email_info["to"], "name":email_info["to_name"]}],
+        "subject": email_info["subject"]}],
+    "content": [{"type": "text/plain", "value": email_info["body"]}],
+    "from":{"email":email_info["from"],"name": email_info["from_name"]}}
 
-def build_sendguard_email(email_info):
-  from_email = Email(email_info["from"], email_info["from_name"])
-  to_email = To(email_info["to"], email_info["to_name"])
-  content = Content("text/plain", email_info["body"])
-  subject = Subject(email_info["subject"])
-  mail = Mail(from_email, to_email, subject, content)
-  return mail;
+def build_sendgrid_email(api_key, email_info):
+  url = "https://api.sendgrid.com/v3/mail/send"
+  payload = build_sendgrid_payload(email_info)
+  headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {}".format(api_key)
+  }
+  payload = build_sendgrid_payload(email_info)
+  mail_response = lambda: requests.post(url, data=json.dumps(payload), headers=headers)
+  return mail_response;
 
-def send_email(email_info):
-  sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
-  mail = build_sendguard_email(email_info)
-  mail_response = sg.client.mail.send.post(request_body=mail.get())
-  return mail_response
+def get_mail_failure_exception(exception):
+  return {"mail_failure": 
+    { "error_type": type(exception).__name__, 
+      "error_message": str(exception)}}
   
+def send_email(email_info):
+  api_key = os.environ.get("SENDGRID_API_KEY")
+  send_mail_payload = build_sendgrid_email(api_key, email_info)
+  send_mail_to_sendgrid = lambda: send_mail_payload()
+  mail_response = handle(send_mail_to_sendgrid, get_mail_failure_exception)
+  return [thaw(email_info), mail_response.json(), dir(mail_response)]
+
 
 def handle_email_routing(email_info):
   email_info_with_plaintext_body = update_email_body_to_plaintext(email_info)
-  mail_response = send_email(email_info)
+  mail_response = send_email(email_info_with_plaintext_body)
   return mail_response
