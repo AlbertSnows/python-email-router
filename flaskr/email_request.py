@@ -6,18 +6,22 @@ from wtforms import (
     DateTimeField,
     TextAreaField,
     IntegerField,
+    EmailField
 )
 
+# todo: all fields are required -> input required
+class EmailRequest(Form):
+ 	to = EmailField("to", [validators.Email])
+	to_name = StringField("to_name", []) # is string
+	from_email = EmailField("from", [validators.Email])
+	subject = StringField("subject", []) # is string
+	body = StringField("body", []) # are there any concerns with html payloads?
+ 
+	def validate_body(form, field):
+			form_is_not_string = !(isinstance(test_string, str))
+			if(form_is_not_string):
+				raise ValidationError('Body must be a string of data')
 
-class RegistrationForm(Form):
-    username = StringField("Username", [validators.Length(min=4, max=25)])
-    email = StringField("Email Address", [validators.Length(min=6, max=35)])
-    accept_rules = BooleanField("I accept the site rules", [validators.InputRequired()])
-
-
-class ProfileForm(Form):
-    birthday = DateTimeField("Your Birthday", format="%m/%d/%y")
-    signature = TextAreaField("Forum Signature")
 
 
 class AdminProfileForm(ProfileForm):
