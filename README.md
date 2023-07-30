@@ -8,7 +8,11 @@ This is a simple repo that adds an endpoint to route valid email requests
 
 There's a bunch of ways to run this app.
 
-Most simply, `docker-compose up` will spin up a docker container to play with. You should be able to access it via localhost. You'll need to have docker stuff installed.
+Most simply, `docker-compose up` will spin up a docker
+
+ container to play with. You should be able to access
+
+ it via localhost. You'll need to have docker stuff installed.
 
 Or, you can also just run the Dockerfile directly
 
@@ -23,6 +27,10 @@ Orr, you can run `Waitress` directly, which is the prod server the app is hosted
 Orrr, you can run the flask server
 
 `flask --app flaskr run`
+
+For each of thes you'll need to have the correct package
+
+installed, such as `waitress` or `flask` on the CLI.
 
 Those will all spin up the server. These should all be accessible by either `localhost`
 
@@ -78,3 +86,5 @@ Normally I always include tests but Python has a fairly mature set of libraries
 to solve problems like this. 90% of the code is just asking libraries to do things
 
 for me which means there's not a lot of headway to get out of testing.
+
+Also Python has a lot of cool functional libraries I didn't get to try. RIP.
