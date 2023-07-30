@@ -42,11 +42,24 @@ language. Flask seemed like a solid choice becuase we're effectively making the 
 
 conceivable API and Flask is well suited for micro-frameworks.
 
-Note, you need to have an api key with sendgrid in order for the emails to be sent. 
+Note, you need to have an api key with sendgrid in order for the emails to be sent.
 
 Put your api key in the .env and then pass your json to the endpoint. You can use
 
-either a curl or an API tool like Insomnia or Postman to run the command. 
+either a curl or an API tool like Insomnia or Postman to run the command.
+
+Libraries:
+
+ pyrsistent -> because persistent data structures
+
+ jsonschema -> for pleasant endpoint validation
+
+ dotenv -> for easy env variable setup
+
+ requests -> *the* choice for sending http requests as far as I can tell
+
+ beautifulsoup -> has a robust html->plaintext parser
+
 
 ### Tradeoffs
 
