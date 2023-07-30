@@ -36,7 +36,8 @@ def get_mail_failure_exception(exception):
 def parse_mail_response(payload):
   match payload.status_code:
     case 202: return {"message": "Email sent!"}
-    case 403: return {"message": "Problem with mail request", "info": [payload.json()]}
+    case 403: return {"error": "Problem with mail request", "info": payload.json()}
+    case 401: return {"error": "not found error", "info": payload.json()}
     case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code)}
     
 def send_email(email_info):
