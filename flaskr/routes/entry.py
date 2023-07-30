@@ -4,7 +4,7 @@ from markupsafe import escape
 
 @bp.route("/")
 def entry():
-		return jsonify(message="Entry point!")
+		return jsonify(message="Entry point! Send your data to the /email route")
 bp.add_url_rule("/", endpoint="index")
 
 @bp.route("/hello")
