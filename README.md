@@ -24,11 +24,9 @@ Orrr, you can run the flask server
 
 `flask --app flaskr run`
 
-For each of thes you'll need to have the correct package installed, such as `waitress` or `flask` on the CLI.
+For each of these you'll need to have the correct package installed, such as `waitress` or `flask` on the CLI.
 
-Those will all spin up the server. These should all be accessible by either `localhost`
-
-or `127.0.0.1`
+Those will all spin up the server. These should all be accessible by either `localhost` or `127.0.0.1`
 
 There are a few toy endpoints, the main one for the email stuff is at `/email`
 
@@ -40,7 +38,7 @@ Framework: Flask
 
 Why: I haven't worked with Python in a while so it was a good opportunity to revist the language. Flask seemed like a solid choice becuase we're effectively making the smallest conceivable API and Flask is well suited for micro-frameworks.
 
-Note, you need to have an api key with sendgrid in order for the emails to be sent.
+Note: you need to have an api key with sendgrid in order for the emails to be sent.
 
 Put your api key in the .env and then pass your json to the endpoint. You can use either a curl or an API tool like Insomnia or Postman to run the command.
 
