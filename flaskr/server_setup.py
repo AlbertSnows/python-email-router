@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect
 
 def register_blueprints(app, blueprints):
     for bp in blueprints:
@@ -29,9 +29,14 @@ def initalize_instance_paths(app):
         pass
       
 def build_app(test_config):
-		app = initalize_app(test_config)
-		initalize_instance_paths(app)
-		from flaskr.routes import entry
-		from flaskr.routes import email
-		app = register_blueprints(app, (entry.bp, email.bp))
-		return app
+    app = initalize_app(test_config)
+    initalize_instance_paths(app)
+
+    @app.route("/")
+    def bare():
+        return redirect("/entry")
+    
+    from flaskr.routes import entry
+    from flaskr.routes import email
+    app = register_blueprints(app, (entry.bp, email.bp))
+    return app

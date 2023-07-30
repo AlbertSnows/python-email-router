@@ -3,6 +3,10 @@ from flaskr.core.parsing import update_email_body_to_plaintext
 import json
 import requests
 from flaskr.utility.exceptions import handle
+from dotenv import load_dotenv
+
+#todo change this
+load_dotenv()
 
 def build_sendgrid_payload(email_info):
   return   {
