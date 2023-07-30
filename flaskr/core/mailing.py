@@ -31,14 +31,20 @@ def get_mail_failure_exception(exception):
   return {"mail_failure": 
     { "error_type": type(exception).__name__, 
       "error_message": str(exception)}}
-  
+
+def parse_mail_response(payload):
+  match payload.status_code:
+    case 202: return {"message": "Email sent!"}
+    case 403: return {"message": "Problem with mail request", "info": [payload.json()]}
+    case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code)}
+    
 def send_email(email_info):
   api_key = os.environ.get("SENDGRID_API_KEY")
   send_mail_payload = build_sendgrid_email(api_key, email_info)
   send_mail_to_sendgrid = lambda: send_mail_payload()
   mail_response = handle(send_mail_to_sendgrid, get_mail_failure_exception)
-  return [thaw(email_info), mail_response.json(), dir(mail_response)]
-
+  parsed_mail_response = parse_mail_response(mail_response)
+  return parsed_mail_response
 
 def handle_email_routing(email_info):
   email_info_with_plaintext_body = update_email_body_to_plaintext(email_info)

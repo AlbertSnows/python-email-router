@@ -4,6 +4,7 @@ from jsonschema import validate, exceptions, FormatChecker
 from pyrsistent import freeze
 from flaskr.core.mailing import handle_email_routing
 import json 
+import os
 
 bp = Blueprint("email", __name__, url_prefix="/email")
 
@@ -14,7 +15,7 @@ def validate_input(json):
 		return {"message": "Valid payload"}
 	except exceptions.ValidationError as e:
 		return {"error":e.message}   
-import os
+
 @bp.route("/", methods=["POST"])
 def process_email_routing_request():
   payload = request.json
