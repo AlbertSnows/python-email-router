@@ -1,4 +1,5 @@
 # https://python-course.eu/advanced-python/currying-in-python.php
+# Thought I was going to use but ended up not using it
 def curry(func):
     # to keep the name of the curried function:
     curry.__curried_func_name__ = func.__name__
