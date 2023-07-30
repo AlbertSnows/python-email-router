@@ -1,14 +1,15 @@
 import unittest
-from unittest.mock import match
+# from unittest.mock import match
 from flaskr.routes.email import validate_input
 from flaskr.utility.file import load_json_from_file
 
 def test_validate_input():
     bad_json = {"foo": "bar"}
-    good_json = load_json_from_file('./data/good_email.json')
     bad_result = validate_input(bad_json)
-    good_result = validate_input(good_json)
     print(bad_result)
+
+    good_json = load_json_from_file('./data/good_email.json')
+    good_result = validate_input(good_json)
     print(good_result)
 
 
