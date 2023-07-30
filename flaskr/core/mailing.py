@@ -35,10 +35,10 @@ def get_mail_failure_exception(exception):
 
 def parse_mail_response(payload):
   match payload.status_code:
-    case 202: return {"message": "Email sent!"}
-    case 403: return {"error": "Problem with mail request", "info": payload.json()}
-    case 401: return {"error": "not found error", "info": payload.json()}
-    case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code)}
+    case 202: return {"message": "Email sent!", "status_code": 200}
+    case 403: return {"error": "Problem with mail request", "info": payload.json(), "status_code": 400}
+    case 401: return {"error": "not found error", "info": payload.json(), "status_code": 400}
+    case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code), "status_code": 400}
     
 def send_email(email_info):
   api_key = os.environ.get("SENDGRID_API_KEY")
