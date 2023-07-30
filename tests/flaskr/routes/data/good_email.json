@@ -1,0 +1,8 @@
+{
+	"to": "fake@example.com",
+	"to_name": "Mr. Fake",
+	"from": "no-reply@fake.com",
+	"from_name":"Ms. Fake",
+	"subject": "A message from The Fake Family",
+	"body": "<h1>Your Bill</h1><p>$10</p>"
+	}
