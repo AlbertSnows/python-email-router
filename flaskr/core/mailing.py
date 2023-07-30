@@ -1,8 +1,5 @@
 import os
-from pyrsistent import thaw
 from flaskr.core.parsing import update_email_body_to_plaintext
-import sendgrid
-# from sendgrid.helpers.mail import *
 import json
 import requests
 from flaskr.utility.exceptions import handle
