@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from flaskr.utility.file import load_json_from_file
 from jsonschema import validate, exceptions, FormatChecker
 from pyrsistent import freeze
-from flaskr.core.mailing.sendgrid import handle_email_routing
+from flaskr.core.mailing.router import handle_email_routing
 import os
 
 bp = Blueprint("email", __name__, url_prefix="/email")
