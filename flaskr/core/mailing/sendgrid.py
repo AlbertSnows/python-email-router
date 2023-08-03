@@ -1,6 +1,7 @@
 import json
 import requests
 from flaskr.utility.exceptions import handle
+from flaskr.core.mailing.helpers import get_mail_failure_exception
 
 def build_sendgrid_payload(email_info):
   return   {
@@ -20,11 +21,6 @@ def build_sendgrid_email(api_key, email_info):
   }
   mail_response = lambda: requests.post(url, data=json.dumps(payload), headers=headers)
   return mail_response;
-
-def get_mail_failure_exception(exception):
-  return {"mail_failure": 
-    { "error_type": type(exception).__name__, 
-      "error_message": str(exception)}}
 
 def parse_mail_response(payload):
   match payload.status_code:
