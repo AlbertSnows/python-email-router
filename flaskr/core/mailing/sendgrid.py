@@ -1,12 +1,6 @@
-import os
-from flaskr.core.parsing import update_email_body_to_plaintext
 import json
 import requests
 from flaskr.utility.exceptions import handle
-from dotenv import load_dotenv
-
-#todo change this
-load_dotenv()
 
 def build_sendgrid_payload(email_info):
   return   {
@@ -40,15 +34,10 @@ def parse_mail_response(payload):
     case 401: return {"error": "not found error", "info": payload.json(), "status_code": 400}
     case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code), "status_code": 400}
     
-def send_email(email_info):
-  api_key = os.environ.get("SENDGRID_API_KEY")
+def send_sendgrid_email(email_info, env):
+  api_key = env.get("SENDGRID_API_KEY")
   send_mail_payload = build_sendgrid_email(api_key, email_info)
   send_mail_to_sendgrid = lambda: send_mail_payload()
   mail_response = handle(send_mail_to_sendgrid, get_mail_failure_exception)
   parsed_mail_response = parse_mail_response(mail_response)
   return parsed_mail_response
-
-def handle_email_routing(email_info):
-  email_info_with_plaintext_body = update_email_body_to_plaintext(email_info)
-  mail_response = send_email(email_info_with_plaintext_body)
-  return mail_response
