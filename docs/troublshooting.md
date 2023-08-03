@@ -9,3 +9,7 @@ A place to store Problem->Solution combos as I do dev work.
 `pip install -e .`
 
 Note: this seems to cause issue with the docker build so have to remove? Double check...
+
+## Docker isn't picking up changes in filesystem
+
+`docker-compose up --build`

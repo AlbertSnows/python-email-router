@@ -8,7 +8,7 @@ This is a simple repo that adds an endpoint to route valid email requests
 
 There's a bunch of ways to run this app.
 
-Most simply, `docker-compose up` will spin up a docker container to play with. You should be able to access it via localhost. You'll need to have docker stuff installed.
+Most simply, `docker-compose up` will spin up a docker container to play with. You should be able to access it via localhost. You'll need to have docker stuff installed. Also if you notice docker isn't picking up your changes, you can run `docker-compose up --build`
 
 Or, you can also just run the Dockerfile directly
 
