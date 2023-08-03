@@ -23,8 +23,7 @@ def process_email_routing_request():
   mail_response = handle_email_routing(freeze(payload), env) if (not "error" in validation_result) else {"mail_result": "Invaild payload, could not send"}
   status_code = mail_response.get("status_code", "500")
   resp_payload = {"validated": validation_result,
-                  "routed_mail": mail_response,
-                  "status_code": status_code}
+                  "routed_mail": mail_response}
   resp = jsonify(resp_payload)
   return resp, status_code
   
