@@ -18,7 +18,6 @@ def build_sendgrid_email(api_key, email_info):
     "Accept": "application/json",
     "Authorization": "Bearer {}".format(api_key)
   }
-  payload = build_sendgrid_payload(email_info)
   mail_response = lambda: requests.post(url, data=json.dumps(payload), headers=headers)
   return mail_response;
 
