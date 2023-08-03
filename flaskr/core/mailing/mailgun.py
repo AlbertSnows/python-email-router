@@ -1,2 +1,2 @@
 def send_mailgun_email(env, email_info):
-  print("todo...")
+  return {"status_code": 501}
