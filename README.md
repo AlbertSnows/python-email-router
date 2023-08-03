@@ -38,7 +38,7 @@ Framework: Flask
 
 Why: I haven't worked with Python in a while so it was a good opportunity to revist the language. Flask seemed like a solid choice becuase we're effectively making the smallest conceivable API and Flask is well suited for micro-frameworks.
 
-Note: you need to have an api key with sendgrid in order for the emails to be sent.
+Note: you need to have an api key with whichever email router you're using in order for the emails to be sent. Also it still probably wont work because in order for emails to be sent they need to be added as a valid email to receive emails. What that means is in order to actually test this code you'll need to make your own account with sendgrid or mailgun. 
 
 Put your api key in the .env and then pass your json to the endpoint. You can use either a curl or an API tool like Insomnia or Postman to run the command.
 
