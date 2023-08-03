@@ -7,5 +7,5 @@ def handle_email_routing(email_info, env):
   email_info_with_plaintext_body = update_email_body_to_plaintext(email_info)
   email_router = env.get("EMAIL_ROUTER")
   send_email = ROUTING_OPTIONS[email_router] # todo bonus: implement get_if_exists
-  mail_response = send_email(email_info_with_plaintext_body)
+  mail_response = send_email(env, email_info_with_plaintext_body)
   return mail_response

@@ -33,7 +33,7 @@ def parse_mail_response(payload):
     case 401: return {"error": "not found error", "info": payload.json(), "status_code": 400}
     case None | _: return {"warning": "Unrecognized status code: {}".format(payload.status_code), "status_code": 400}
     
-def send_sendgrid_email(email_info, env):
+def send_sendgrid_email(env, email_info):
   api_key = env.get("SENDGRID_API_KEY")
   send_mail_payload = build_sendgrid_email(api_key, email_info)
   send_mail_to_sendgrid = lambda: send_mail_payload()
