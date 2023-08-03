@@ -1,8 +1,8 @@
 FROM python:latest
 
-WORKDIR /app
-
 COPY . /app
+
+WORKDIR /app
 
 RUN python3 -m venv .venv
 RUN . .venv/bin/activate
