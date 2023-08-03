@@ -2,7 +2,7 @@ import json
 import requests
 from flaskr.utility.exceptions import handle
 from flaskr.core.mailing.helpers import get_mail_failure_exception
-
+from flaskr.core.mailing.helpers import parse_mail_response
 def build_sendgrid_payload(email_info):
   return   {
     "personalizations":
@@ -21,13 +21,6 @@ def build_sendgrid_email(api_key, email_info):
   }
   mail_response = lambda: requests.post(url, data=json.dumps(payload), headers=headers)
   return mail_response;
-
-def parse_mail_response(payload):
-  match payload.status_code:
-    case 202: return {"message": "Email sent!", "status_code": 200}
-    case 403: return {"error": "Problem with mail request", "info": payload.json(), "status_code": 400}
-    case 401: return {"error": "not found error", "info": payload.json(), "status_code": 400}
-    case None | _: return {"warning": "Unhandled status code: {}".format(payload.status_code), "status_code": 400}
     
 def send_sendgrid_email(env, email_info):
   api_key = env.get("SENDGRID_API_KEY")
