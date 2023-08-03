@@ -3,6 +3,7 @@ import requests
 from flaskr.utility.exceptions import handle
 from flaskr.core.mailing.helpers import get_mail_failure_exception
 from flaskr.core.mailing.helpers import parse_mail_response
+
 def build_sendgrid_payload(email_info):
   return   {
     "personalizations":

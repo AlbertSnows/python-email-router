@@ -1,7 +1,6 @@
 import requests
 from flaskr.utility.exceptions import handle
-from flaskr.core.mailing.helpers import get_mail_failure_exception
-from flask import jsonify
+from flaskr.core.mailing.helpers import get_mail_failure_exception, parse_mail_response
 
 def build_mailgun_payload(email_info):
   return   {
@@ -16,8 +15,6 @@ def build_mailgun_email(api_domain, api_key, email_info):
   auth = ("api", api_key)
   mail_response = lambda: requests.post(url, auth=auth,  data=payload)
   return mail_response;
-
-
 
 def send_mailgun_email(env, email_info):
   api_key = env.get("MAILGUN_API_KEY", "Bad env config: api key")
